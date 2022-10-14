@@ -1,3 +1,13 @@
 * {
   box-sizing: border-box;
 }
+
+.Navbar_button {
+  margin-left: 10px;
+}
+
+#Navbar_button-wrapper{
+  display: flex;
+  margin-left: auto;
+  justify-content: flex-end;
+}
