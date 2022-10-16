@@ -15,7 +15,7 @@ public class BuildingDimensions {
     private int overhang;
 
     @Id
-    private int totalSqft = length*width;
+    private int totalSqft;
 
 
 }

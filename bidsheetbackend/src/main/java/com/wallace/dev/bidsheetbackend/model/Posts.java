@@ -18,6 +18,6 @@ public class Posts {
     private String size;
     private int quantity;
     private float unitPrice;
-    private float totalCost = unitPrice*quantity;
+    private float totalCost;
 
 }
