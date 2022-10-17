@@ -8,7 +8,7 @@ export default function Navbar(){
     function buttonMaker(bodyText){
         let buttons = []
         for (let i=0; i<bodyText.length; i++){
-            buttons.push(<button className="Navbar_button">{bodyText[i]}</button>)
+            buttons.push(<button key={i} className="Navbar_button">{bodyText[i]}</button>)
         }
         return(buttons);
     }
