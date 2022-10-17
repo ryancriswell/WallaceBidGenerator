@@ -1,11 +1,27 @@
+import {useState} from 'react';
 
 export default function PostCount(){
 
+    //hold the sizes in state so when we change the module it will retain the data
+    const [formData, setFormData] = useState([
+        {size: "6x6x16", quantity: 0},
+        {size: "6x6x18", quantity: 0},
+        {size: "6x6x20", quantity: 0},
+        {size: "6x6x22", quantity: 0},
+        {size: "6x6x24", quantity: 0},
+        {size: "6x8x20", quantity: 0},
+        {size: "6x8x22", quantity: 0},
+        {size: "6x8x24", quantity: 0}])
 
-
-    // TODO: hold the sizes in state so when we change the module it will retain the data
-
-
+    // when we change the value in the input box, update the state
+    function handleOnChange(event){
+        setFormData(formData.map(prevFormData => {
+            if (prevFormData.size === event.target.name) {
+                return {...prevFormData, quantity: event.target.value}
+            }
+            return prevFormData
+        }))
+    }
 
     /**
      * Generates a label with that size and an input box to enter
@@ -13,15 +29,19 @@ export default function PostCount(){
      * @param {String[]} sizes - The size of the post
      * @returns Array of JSX objects which hold label and input pairs
      */
-    function postFieldMaker(sizes){
-        let fieldCount=sizes.length
+    function postFieldMaker(){
+        let fieldCount=formData.length
         let inputs = []
         for (let i=0; i<fieldCount; i++){
             inputs.push(
             <div key={i}>
-                <label>{sizes[i]}</label>
+                <label>{formData[i].size}</label>
                 <input className="PostCount_input"
-                    label={sizes[i]} defaultValue={0} />
+                    label={formData[i].size}
+                    name={formData[i].size} 
+                    value={formData[i].quantity}
+                    onChange={handleOnChange} 
+                />
             </div>
             )
         }
@@ -30,8 +50,7 @@ export default function PostCount(){
 
     return(
         <form>
-            {postFieldMaker(["6x6x16","6x6x18","6x6x20","6x6x22",
-                        "6x6x24","6x8x20","6x8x22","6x8x24"])}
+            {postFieldMaker()}
             <input type="submit" text="Submit" />
         </form>
     )
