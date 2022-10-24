@@ -1,11 +1,11 @@
 import Navbar from "./components/Navbar";
-import PostCount from "./components/PostCount";
+import BidFieldsRenderer from "./components/BidFieldsRenderer";
 
 function App() {
   return (
     <div>
       <Navbar/>
-      <PostCount/>
+      <BidFieldsRenderer/>
     </div>
   );
 }

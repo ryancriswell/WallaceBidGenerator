@@ -1,4 +1,3 @@
-
 export default function Navbar(){
 
     /**
@@ -13,7 +12,7 @@ export default function Navbar(){
         return(buttons);
     }
     return(
-        <div id="Navbar_button-wrapper">
+        <div id="Navbar_button-container">
             {buttonMaker(["Material Cost", "New Bid",  
                 "Bid History", "Customer Copy"])}
         </div>
