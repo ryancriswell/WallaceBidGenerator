@@ -8,12 +8,8 @@ import {useState} from 'react';
  * @returns a <form> element with a number of label-input box pairs
  */
 export default function FormModule(props){
-
-    console.log("form module rendered with props=")
-    console.log(props)
-
     // hold the names and input box values in state
-    const [formData, setFormData] = useState(props.defaultState)
+    const [formData, setFormData] = useState(props.defaultState.state)
 
     // when we change the value in the input box, update the state
     function handleOnChange(event){
@@ -30,19 +26,18 @@ export default function FormModule(props){
      * @returns Array of JSX objects which hold <label> and <input> pairs
      */
     function fieldMaker(){
-        let fieldCount=formData.state.length
         let inputs = []
-        for (let i=0; i<fieldCount; i++){
+        for (let i=0; i<formData.length; i++){
             inputs.push(
             <div key={i}>
                 <label className={props.className}>
-                    {formData.state[i].name}
+                    {formData[i].name}
                 </label>
                 <input className={props.className}
                     type="number"
-                    label={formData.state[i].name}
-                    name={formData.state[i].name} 
-                    value={formData.state[i].value}
+                    label={formData[i].name}
+                    name={formData[i].name} 
+                    value={formData[i].value}
                     onChange={handleOnChange} 
                 />
             </div>
