@@ -1,26 +1,31 @@
 import FormModule from "./FormModule"
 import BidFieldsNavigator from "./BidFieldsNavigator"
-import {useState} from "react"
-import { postsFields,buildingDimensionsFields } from "./BidFields"
+import {useState, useEffect} from "react"
 
 /**
  * Contains conditional rendering logic for rendering
- * the input boxes depending on button click and state 
- * for the bid fields buttons.
- * @returns 
+ * the input boxes depending on which button was last clicked
  */
-export default function BidFieldsRenderer(){
+export default function BidFieldsRenderer(props){
+    const getButtonText = (i) => Object.keys(props.bid[i])
+    const [lastClicked, setLastClicked] = useState(getButtonText(0)[0].trim())
 
-    const [posts,setPosts]=useState(postsFields)
-    const [buildingDimensions,setBuildingDimensions]=useState(buildingDimensionsFields)
-    const [fieldVisibility,setFieldVisibility]=useState([
-        {name: "Building Dimensions", isShown: false},
-        {name: "Post Count", isShown: false}])
+    // Get the button names from the props.bid array to be used as name values
+    const defaultVisibilityState = () => {
+        let state=[]
+        state.push({name: getButtonText(0)[0].trim(), isShown: true})
+        for (let i=1; i<props.bid.length; i++){
+            state.push({name: getButtonText(i)[0].trim(), isShown: false})
+        }
+        return state
+    }
+
+    const [fieldVisibility,setFieldVisibility]=useState(defaultVisibilityState)
 
     function handleClick(e){
-        let buttonText = e.target.innerHTML
+        setLastClicked(e.target.innerHTML.trim())
         setFieldVisibility([...fieldVisibility].map(obj => {
-            if (obj.name===buttonText){
+            if (obj.name.trim() === lastClicked.trim()){
                 return {...obj, isShown: true}
             }else{
                 return {...obj, isShown: false}
@@ -33,6 +38,8 @@ export default function BidFieldsRenderer(){
     function getIsShown(name){
         for (let i=0; i<fieldVisibility.length; i++){
             let obj=fieldVisibility[i]
+            console.log(obj.name, name)
+            console.log(obj.isShown)
             if (obj.name === name){
                 return obj.isShown
             }
@@ -43,17 +50,37 @@ export default function BidFieldsRenderer(){
 
     return(
         <div>
-            <BidFieldsNavigator onClick={handleClick}/>
-            {getIsShown("Building Dimensions") &&
+            <BidFieldsNavigator 
+                onClick={handleClick}
+                bid={props.bid}
+                getButtonText={getButtonText}
+            />
+
             <FormModule 
-            defaultState={buildingDimensions}
-            className="form-module_building-dimensions"
-            />}
+                bid={props.bid}
+                setBid={props.setBid}
+                className="form-module"
+                lastClicked={lastClicked}
+            />
+            
+
+            {/* {getIsShown("Building Dimensions") &&
+                <FormModule 
+                    bid={props.bid}
+                    setBid={props.setBid}
+                    className="form-module_building-dimensions"
+                    lastClicked={lastClicked}
+                />
+            }
+
             {getIsShown("Post Count") &&
-            <FormModule 
-            defaultState={posts}
-            className="form-module_posts"  
-            />}
+                <FormModule 
+                    bid={props.bid}
+                    setBid={props.setBid}
+                    className="form-module_posts"  
+                    lastClicked={lastClicked}
+                />
+            } */}
         </div>
     )
 }

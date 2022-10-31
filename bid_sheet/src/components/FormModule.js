@@ -1,23 +1,33 @@
-import {useState} from 'react';
-
-/**
- * props.className: The CSS class of the input boxes and labels
- * defaultState: String[] of text values for the labels and default values
- * for the input boxes.
- * @param {defaultState, className} props 
- * @returns a <form> element with a number of label-input box pairs
- */
 export default function FormModule(props){
-    // hold the names and input box values in state
-    const [formData, setFormData] = useState(props.defaultState.state)
+
+    // return the index according to the bid state that gives us access to
+    // the name, value pairs of the inner object. for example "Building Dimensions"
+    // should return 0 because the building dimensions object is the first in the
+    // state array
+    function getIndexOfLastClicked(){
+        for (let i=0; i<props.bid.length; i++){
+            if (props.lastClicked.trim() === Object.keys(props.bid[i])[0]){
+                return i
+            }
+        }
+        return -1
+    }
 
     // when we change the value in the input box, update the state
-    function handleOnChange(event){
-        setFormData(formData.map(prevFormData => {
-            if (prevFormData.name === event.target.name) {
-                return {...prevFormData, value: event.target.value}
+    function handleChange(event){
+        props.setBid(props.bid.map(obj => {
+            if (Object.keys(obj)[0] === props.lastClicked.trim()){
+                let updatedObj = obj[props.lastClicked.trim()].map(x => {
+                    if (x.name === event.target.name){
+                        return {...x, value: parseInt(event.target.value)}
+                    }else{
+                        return x
+                    }
+                })
+                return {[props.lastClicked.trim()]: updatedObj}
+            }else{
+                return obj
             }
-            return prevFormData
         }))
     }
 
@@ -25,20 +35,24 @@ export default function FormModule(props){
      * Generates a label and an input box to enter form data into. 
      * @returns Array of JSX objects which hold <label> and <input> pairs
      */
-    function fieldMaker(){
+    function fieldMaker(){ 
         let inputs = []
-        for (let i=0; i<formData.length; i++){
+        const indexOfLastClicked = getIndexOfLastClicked()
+        const allFields = Object.values(
+            props.bid[indexOfLastClicked])[0]
+        for (let i=0; i<allFields.length; i++){
+            let currentField=allFields[i]
             inputs.push(
             <div key={i}>
                 <label className={props.className}>
-                    {formData[i].name}
+                    {currentField.name}
                 </label>
                 <input className={props.className}
                     type="number"
-                    label={formData[i].name}
-                    name={formData[i].name} 
-                    value={formData[i].value}
-                    onChange={handleOnChange} 
+                    label={currentField.name}
+                    name={currentField.name} 
+                    value={currentField.value}
+                    onChange={handleChange} 
                 />
             </div>
             )
