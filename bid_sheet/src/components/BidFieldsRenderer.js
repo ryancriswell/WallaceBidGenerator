@@ -63,24 +63,6 @@ export default function BidFieldsRenderer(props){
                 lastClicked={lastClicked}
             />
             
-
-            {/* {getIsShown("Building Dimensions") &&
-                <FormModule 
-                    bid={props.bid}
-                    setBid={props.setBid}
-                    className="form-module_building-dimensions"
-                    lastClicked={lastClicked}
-                />
-            }
-
-            {getIsShown("Post Count") &&
-                <FormModule 
-                    bid={props.bid}
-                    setBid={props.setBid}
-                    className="form-module_posts"  
-                    lastClicked={lastClicked}
-                />
-            } */}
         </div>
     )
 }
