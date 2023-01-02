@@ -63,6 +63,7 @@ export default function FormModule(props){
     return(
         <form>
             {fieldMaker()}
+            <button>Submit</button>
         </form>
     )
 }

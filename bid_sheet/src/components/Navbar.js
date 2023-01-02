@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 export default function Navbar(){
 
     /**
@@ -7,13 +8,20 @@ export default function Navbar(){
     function buttonMaker(bodyText){
         let buttons = []
         for (let i=0; i<bodyText.length; i++){
-            buttons.push(<button key={i} className="Navbar_button">{bodyText[i]}</button>)
+            let url = "/"+bodyText[i].replace(' ', '-').toLowerCase()
+            buttons.push(
+                <div>
+                    <Link to={url == "/home" ? "" : url}>
+                        <button key={i} className="Navbar_button">{bodyText[i]}</button>
+                    </Link>
+                </div>
+            )
         }
         return(buttons);
     }
     return(
         <div id="Navbar_button-container">
-            {buttonMaker(["Material Cost", "New Bid",  
+            {buttonMaker(["Home", "Material Costs", "Bid",  
                 "Bid History", "Customer Copy"])}
         </div>
     );

@@ -1,6 +1,9 @@
 import Navbar from "./components/Navbar";
 import BidFieldsRenderer from "./components/BidFieldsRenderer";
-import {useState} from "react"
+import Home from "./components/Home";
+import MaterialCosts from "./components/MaterialCosts"
+import {useState} from "react";
+import {Routes, Route} from "react-router-dom"
 
 
 function App() {
@@ -29,16 +32,19 @@ function App() {
       ]
     },
     {
-      "Roof Pitch/Miles/Equipment": [
+      "Misc": [
         {name: "Roof Pitch", value: 0},
         {name: "Miles From Shop", value: 0},
-        {name: "Pieces of Equipment Needed", value: 0}
+        {name: "Pieces of Equipment Needed", value: 0},
+        {name: "Difficulty Rating", value: 0}
       ]
     },
     {
       "Truss and Purlin": [
         {name: "Truss Quote", value: 0},
-        {name: "2x4 Edge Purlin Stiffener", value: 0}
+        {name: "Truss Bracing 2x4 LF", value: 0},
+        {name: "2x4 Edge Purlin Stiffener", value: 0},
+        {name: "Purlin Spacing", value: 0}
       ]
     },
     {
@@ -94,10 +100,11 @@ function App() {
   return (
     <div>
       <Navbar/>
-      <BidFieldsRenderer 
-        bid={bid}
-        setBid={setBid}
-      />
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="/material-costs" element={<MaterialCosts/>} />
+        <Route path="/bid" element={ <BidFieldsRenderer bid={bid} setBid={setBid}/> }/>
+      </Routes>
     </div>
   );
 }

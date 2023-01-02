@@ -1,6 +1,6 @@
 import FormModule from "./FormModule"
 import BidFieldsNavigator from "./BidFieldsNavigator"
-import {useState, useEffect} from "react"
+import {useState} from "react"
 
 /**
  * Contains conditional rendering logic for rendering
@@ -50,6 +50,7 @@ export default function BidFieldsRenderer(props){
 
     return(
         <div>
+            <h1>Create Bid</h1>
             <BidFieldsNavigator 
                 onClick={handleClick}
                 bid={props.bid}

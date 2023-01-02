@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+#Home_logo {
+  width: 500px;
+}
+
 .Navbar_button {
   margin-left: 10px;
 }
@@ -15,4 +19,12 @@
 #bidFieldsNavigator_button-container{
   display: grid;
   grid-template-columns: 200px;
+}
+
+.MaterialCosts_labels{
+  display: inline-block;
+}
+
+.MaterialCosts_inputs{
+  display: inline-block;
 }
